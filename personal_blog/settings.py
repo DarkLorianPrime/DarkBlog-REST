@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'authorizationserver',
     'django.contrib.admin',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'blogs'
 ]
 
 AUTH_USER_MODEL = "authorizationserver.User"
@@ -54,7 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'utils.middlewares.auth_middleware.isAuth'
+    'utils.middlewares.auth_middleware.isAuth',
+    'utils.middlewares.auth_middleware.CheckToken'
 ]
 
 ROOT_URLCONF = 'personal_blog.urls'

@@ -9,9 +9,11 @@ class Roles(models.Model):
 
 
 class User(AbstractUser):
-    role = models.ManyToManyField(Roles)
+    role = models.ManyToManyField('Roles')
+    sub_blog = models.ManyToManyField('blogs.Blog')
     token = models.CharField(max_length=255)
-    avatar = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField()
+    avatar = models.CharField(max_length=255, null=True, blank=True)  # temporarily removed
 
 
 class PostToken(models.Model):

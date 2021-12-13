@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from authorizationserver import urls
-
+from authorizationserver import urls as url_auth
+from blogs import urls as url_blog
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(urls))
+    path('', include(url_auth)),
+    path('', include(url_blog))
 ]
