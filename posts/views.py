@@ -35,7 +35,6 @@ class Posts(ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         paginate(self)
-
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         user = get_user(self.request.headers)
