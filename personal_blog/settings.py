@@ -40,9 +40,20 @@ INSTALLED_APPS = [
     'authorizationserver',
     'django.contrib.admin',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
-    'blogs'
+    'blogs',
+    'posts'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
 
 AUTH_USER_MODEL = "authorizationserver.User"
 

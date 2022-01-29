@@ -1,9 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from blogs import views
 
 name = 'blogs'
-
+router = routers.DefaultRouter()
+router.register(r'', views.Blogs)
 urlpatterns = [
-    path('blogs/', views.Blogs.as_view({'get': 'list', 'post': 'create'}))
+    path('', include(router.urls))
 ]

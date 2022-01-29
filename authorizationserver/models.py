@@ -11,9 +11,8 @@ class Roles(models.Model):
 class User(AbstractUser):
     role = models.ManyToManyField('Roles')
     sub_blog = models.ManyToManyField('blogs.Blog')
-    token = models.CharField(max_length=255)
     description = models.TextField()
-    avatar = models.CharField(max_length=255, null=True, blank=True)  # temporarily removed
+    avatar = models.CharField(max_length=255, null=True, blank=True)  # temporarily removed (Мне лень делать это)
 
 
 class PostToken(models.Model):

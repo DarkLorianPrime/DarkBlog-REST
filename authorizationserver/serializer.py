@@ -4,7 +4,7 @@ from django.db.models import Q
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
-from authorizationserver.models import User
+from authorizationserver.models import User, Roles
 
 
 class LoginSerializer(ModelSerializer):
@@ -16,8 +16,8 @@ class LoginSerializer(ModelSerializer):
         user = User.objects.filter(Q(username=validated_data.get('username')) | Q(email=validated_data.get('email')))
         if user.exists():
             raise ValidationError({'error': 'This email or login already exists'})
-        new_user = User.objects.create_user(username=validated_data.get('username'), email=validated_data.get('email'), password=validated_data.get('password'), token=uuid.uuid4().hex)
-        new_user.role.add(1)
+        new_user = User.objects.create_user(username=validated_data.get('username'), email=validated_data.get('email'), password=validated_data.get('password'))
+        new_user.role.add(Roles.objects.filter(role='User'))
         return new_user
 
 #     def validate(self, data):

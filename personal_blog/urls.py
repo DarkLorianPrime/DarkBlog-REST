@@ -18,8 +18,10 @@ from django.urls import path, include
 
 from authorizationserver import urls as url_auth
 from blogs import urls as url_blog
+from posts import urls as url_posts
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(url_auth)),
-    path('', include(url_blog))
+    path('', include(url_blog)),
+    path('', include(url_posts)),
 ]
