@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2294181b-be4b-4e98-b46a-fb1415bcd378" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/pythonProject.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/New Collection.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0002_posttoken.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0003_auto_20211129_2203.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0004_auto_20211129_2204.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0005_auto_20211129_2210.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0006_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0007_auto_20211210_1813.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0008_auto_20211210_1844.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0009_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0010_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0011_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0012_remove_user_token_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0013_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/0014_alter_posttoken_expires.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/serializer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authorizationserver/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0002_auto_20211210_1813.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0003_alter_blog_authors_alter_blog_updated_at.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0004_alter_blog_updated_at.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0005_alter_blog_description_alter_blog_owner_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/0006_remove_post_author_remove_post_blog_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/serializer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blogs/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal_blog/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal_blog/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal_blog/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal_blog/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal_blog/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/migrations/0002_alter_post_created_at_alter_post_is_published_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/serializer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/posts/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Extra.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/decorators/login_decorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/decorators/token_decorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/extra_editor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/middlewares/auth_middleware.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="24NneCbTCWaQ8Bki4NKJWTQkZEg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/personal_blog/settings.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="pythonProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2294181b-be4b-4e98-b46a-fb1415bcd378" name="Changes" comment="" />
+      <created>1643480355694</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1643480355694</updated>
+      <workItem from="1643480356804" duration="8471000" />
+      <workItem from="1643489330358" duration="5251000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
