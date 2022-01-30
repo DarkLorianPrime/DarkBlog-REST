@@ -9,8 +9,8 @@ from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from blogs.models import Blog
 from posts.models import Post, Comment
-from posts.serializer import PostSerializer
-from utils.Extra import get_user, paginate
+from posts.serializer import PostSerializer, CommentSerializer
+from utils.Extra import get_user, paginate, is_admin
 from utils.decorators.token_decorators import is_not_token_valid
 from utils.extra_editor import add_to_dict
 
@@ -29,12 +29,14 @@ class Posts(ModelViewSet):
     def get_queryset(self):
         user = get_user(self.request.headers)
         post = Post.objects.filter(blog__id=self.kwargs['blog_id']).order_by('created_at')
-        if not Blog.objects.filter(id=self.kwargs['blog_id']).filter(Q(owner=user.id) | Q(authors__in=[user.id])):
-            return post.filter(is_published=True)
+        if not is_admin(user):
+            if not Blog.objects.filter(id=self.kwargs['blog_id']).filter(Q(owner=user.id) | Q(authors__in=[user.id])):
+                return post.filter(is_published=True)
         return post
 
     def list(self, request, *args, **kwargs):
-        paginate(self)
+        return paginate(self)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         user = get_user(self.request.headers)
@@ -44,7 +46,8 @@ class Posts(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         user = get_user(self.request.headers)
-        self.is_author(user)
+        if not is_admin(user):
+            self.is_author(user)
         post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
         if post_data.get('is_published'):
             post_data['created_at'] = datetime.now()
@@ -57,7 +60,8 @@ class Posts(ModelViewSet):
     @is_not_token_valid
     def create(self, request, *args, **kwargs):
         user = get_user(self.request.headers)
-        self.is_author(user)
+        if not is_admin(user):
+            self.is_author(user)
         post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
         if post_data.get('is_published'):
             post_data['created_at'] = datetime.now()
@@ -69,9 +73,8 @@ class Posts(ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         user = get_user(self.request.headers).id
-        blog = Post.objects.filter(author__id=user).filter(id=instance.id)
-        if not blog.exists():
-            raise ValidationError({'error': 'You not owner.'})
+        if not is_admin(user):
+            self.is_author(user)
         Comment.objects.filter(post__id=instance.id).delete()
         self.perform_destroy(instance)
         return Response({'response': 'ok'})
@@ -85,12 +88,38 @@ class Posts(ModelViewSet):
         instance.likes.add(user.id)
         return Response({'response': 'ok'})
 
-    def havepermission(self, request, blog_id):
-        user = get_user(self.request.headers)
-        blog = Blog.objects.filter(id=blog_id).filter(Q(owner=user.id) | Q(authors__in=[user.id]))
-        return Response({'response': blog.exists()})
-
     def is_author(self, user):
         blog = Blog.objects.filter(id=self.kwargs['blog_id']).filter(Q(authors__in=[user]) | Q(owner__id=user.id))
         if not blog.exists():
             raise ValidationError({'error': 'You are not owner or author.'})
+        return True
+
+
+class CommentsViewSet(ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+    def get_queryset(self):
+        post = Post.objects.filter(blog__id=self.kwargs['blog_id'], id=self.kwargs['post_id']).order_by('created_at')
+        return Comment.objects.filter(post=post.first())
+
+    def list(self, request, *args, **kwargs):
+        return paginate(self)
+
+    @is_not_token_valid
+    def create(self, request, *args, **kwargs):
+        user = get_user(self.request.headers)
+        post_data = add_to_dict(request.POST.dict(), author=user.id, post=self.kwargs['post_id'])
+        serialize = self.get_serializer(data=post_data)
+        serialize.is_valid(raise_exception=True)
+        serialize.save()
+        return Response({'response': 'ok'})
+
+    def like(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = get_user(self.request.headers)
+        if instance.like.filter(id=user.id).exists():
+            instance.like.remove(user)
+            return Response({'response': 'ok'})
+        instance.like.add(user.id)
+        return Response({'response': 'ok'})

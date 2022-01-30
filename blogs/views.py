@@ -4,10 +4,10 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from authorizationserver.models import User
+from authorizationserver.models import User, Roles
 from blogs.models import Blog
 from blogs.serializer import BlogSerializer
-from utils.Extra import get_user, paginate
+from utils.Extra import get_user, paginate, is_admin, is_owner
 from utils.decorators.token_decorators import is_not_token_valid
 
 
@@ -37,6 +37,8 @@ class Blogs(ModelViewSet):
         instance = self.get_object()
         post_data = request.data.dict()
         user = get_user(self.request.headers)
+        if not is_admin(user):
+            is_owner(user, instance)
         post_data['owner'] = user.id
         if post_data.get('authors') is not None:
             post_data['authors'] = post_data['authors'].split(', ')
@@ -47,9 +49,8 @@ class Blogs(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers).id
-        blog = Blog.objects.filter(author__id=user).filter(id=instance.id)
-        if not blog.exists():
-            raise ValidationError({'error': 'You not owner.'})
+        user = get_user(self.request.headers)
+        if not is_admin(user):
+            is_owner(user, instance)
         self.perform_destroy(instance)
         return Response({'response': 'ok'})

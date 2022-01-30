@@ -16,4 +16,4 @@ class Comment(models.Model):
     author = models.ForeignKey('authorizationserver.User', on_delete=models.CASCADE, related_name='comment_user')
     text = models.TextField(max_length=200)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comment_post')
-    like = models.ManyToManyField('authorizationserver.User', related_name='likes_comments')
+    like = models.ManyToManyField('authorizationserver.User', related_name='likes_comments', blank=True)

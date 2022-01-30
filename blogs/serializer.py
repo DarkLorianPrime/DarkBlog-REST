@@ -22,8 +22,6 @@ class BlogSerializer(ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        if instance.owner != validated_data.get('owner'):
-            raise ValidationError({'error': 'You are not owner!'})
         if validated_data.get('authors') is not None and validated_data.get('method') == 'add_authors':
             [instance.authors.add(author) for author in validated_data.get('authors') if
              author not in instance.authors.values() and author != instance.owner]
