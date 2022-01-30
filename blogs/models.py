@@ -7,6 +7,6 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey('authorizationserver.User', on_delete=models.CASCADE, related_name='blog_user')
-    authors = models.ManyToManyField('authorizationserver.User', related_name='authors_users', blank=True)
+    authors = models.ManyToManyField('authorizationserver.User', related_name='users_authors', blank=True)
 
 

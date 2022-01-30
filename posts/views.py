@@ -1,5 +1,4 @@
 from datetime import datetime
-from functools import reduce
 
 from django.db.models import Q
 from rest_framework.exceptions import ValidationError
@@ -11,7 +10,6 @@ from blogs.models import Blog
 from posts.models import Post, Comment
 from posts.serializer import PostSerializer, CommentSerializer
 from utils.Extra import get_user, paginate, is_admin
-from utils.decorators.token_decorators import is_not_token_valid
 from utils.extra_editor import add_to_dict
 
 
@@ -57,7 +55,6 @@ class Posts(ModelViewSet):
         self.perform_update(serialize)
         return Response({'response': serialize.instance.title})
 
-    @is_not_token_valid
     def create(self, request, *args, **kwargs):
         user = get_user(self.request.headers)
         if not is_admin(user):
@@ -111,7 +108,6 @@ class CommentsViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         return paginate(self)
 
-    @is_not_token_valid
     def create(self, request, *args, **kwargs):
         user = get_user(self.request.headers)
         post_data = add_to_dict(request.POST.dict(), author=user.id, post=self.kwargs['post_id'])

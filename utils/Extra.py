@@ -8,7 +8,7 @@ from blogs.models import Blog
 
 
 def get_user(headers, return_user=True):
-    token = headers.get('Authorization')
+    token = headers.get('authorization')
     user = Token.objects.filter(key=token.split(' ')[1])
     if return_user:
         return user.first().user

@@ -1,17 +1,12 @@
-from functools import reduce
-
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from authorizationserver.models import User, Roles
 from blogs.models import Blog
 from blogs.serializer import BlogSerializer
 from utils.Extra import get_user, paginate, is_admin, is_owner
-from utils.decorators.token_decorators import is_not_token_valid
 
 
-class Blogs(ModelViewSet):
+class BlogViewSet(ModelViewSet):
     serializer_class = BlogSerializer
     queryset = Blog.objects.all()
 
@@ -21,7 +16,6 @@ class Blogs(ModelViewSet):
     def list(self, request, *args, **kwargs):
         return paginate(self)
 
-    @is_not_token_valid
     def create(self, request, *args, **kwargs):
         post_data = request.POST.dict()
         user = get_user(self.request.headers)

@@ -23,8 +23,7 @@ class BlogSerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         if validated_data.get('authors') is not None and validated_data.get('method') == 'add_authors':
-            [instance.authors.add(author) for author in validated_data.get('authors') if
-             author not in instance.authors.values() and author != instance.owner]
+            [instance.authors.add(author) for author in validated_data.get('authors') if author != instance.owner]
         if validated_data.get('authors') is not None and validated_data.get('method') == 'remove_authors':
             [instance.authors.remove(author) for author in validated_data.get('authors')]
         if validated_data.get('method') == 'common':

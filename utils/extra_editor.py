@@ -7,6 +7,5 @@ def delete_extra(need_types: list, update_dict: dict) -> dict:
 
 
 def add_to_dict(old_dict, **kwargs):
-    for element_name, element in kwargs.items():
-        old_dict[element_name] = element
+    old_dict.update(**kwargs)
     return old_dict

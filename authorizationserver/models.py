@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -10,11 +8,6 @@ class Roles(models.Model):
 
 class User(AbstractUser):
     role = models.ManyToManyField('Roles')
-    sub_blog = models.ManyToManyField('blogs.Blog')
+    # sub_blog = models.ManyToManyField('blogs.Blog') To-Do - Подписки на блоги
     description = models.TextField()
     avatar = models.CharField(max_length=255, null=True, blank=True)  # temporarily removed (Мне лень делать это)
-
-
-class PostToken(models.Model):
-    expires = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(minutes=30))
-    token = models.CharField(max_length=255)

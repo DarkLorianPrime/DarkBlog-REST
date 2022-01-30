@@ -5,7 +5,7 @@ from blogs import views
 
 name = 'blogs'
 router = routers.DefaultRouter()
-router.register(r'', views.Blogs)
+router.register(r'', views.BlogViewSet)
 urlpatterns = [
     path('', include(router.urls))
 ]
