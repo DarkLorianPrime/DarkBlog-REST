@@ -94,6 +94,11 @@ class Posts(ModelViewSet):
             raise ValidationError({'error': 'You are not owner or author.'})
         return True
 
+    def havepermission(self, request, blog_id):
+        user = get_user(self.request.headers)
+        blog = Blog.objects.filter(id=blog_id).filter(Q(owner=user.id) | Q(authors__in=[user.id]))
+        return Response({'response': blog.exists()})
+
 
 class CommentsViewSet(ModelViewSet):
     serializer_class = CommentSerializer
