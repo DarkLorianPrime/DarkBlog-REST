@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from blogs.models import Blog
 from posts.models import Post, Comment
-from posts.serializer import PostSerializer, CommentSerializer
+from posts.serializers import PostSerializer, CommentSerializer
 from utils.Extra import paginate, is_admin
 from utils.extra_editor import add_to_dict
 

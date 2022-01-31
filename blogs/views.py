@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from blogs.models import Blog
-from blogs.serializer import BlogSerializer
+from blogs.serializers import BlogSerializer
 from utils.Extra import paginate, is_admin, is_owner
 
 

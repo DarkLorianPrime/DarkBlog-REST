@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from authorizationserver.models import User
-from authorizationserver.serializer import LoginSerializer, RegisterSerializer, UserSerializer
+from authorizationserver.serializers import LoginSerializer, RegisterSerializer, UserSerializer
 
 
 class PermissionAuth(ViewSet):
@@ -29,6 +29,7 @@ class Auth(ViewSet):
 
     def auth(self, request, *args, **kwargs):
         data = request.POST
+
         serialize = LoginSerializer(data=data)
         serialize.is_valid(raise_exception=True)
         user = User.objects.filter(username=data.get('username'))
