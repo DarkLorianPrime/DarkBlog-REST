@@ -118,7 +118,7 @@ class CommentsViewSet(ModelViewSet):
 
     def like(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers)
+        user = request.user_data
         if instance.like.filter(id=user.id).exists():
             instance.like.remove(user)
             return Response({'response': 'ok'})
