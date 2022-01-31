@@ -28,8 +28,7 @@ class Auth(ViewSet):
     permission_classes = []
 
     def auth(self, request, *args, **kwargs):
-        data = request.POST
-
+        data = request.data
         serialize = LoginSerializer(data=data)
         serialize.is_valid(raise_exception=True)
         user = User.objects.filter(username=data.get('username'))
@@ -41,7 +40,7 @@ class Auth(ViewSet):
         return Response({'response': token})
 
     def registration(self, request, *args, **kwargs):
-        serialize = RegisterSerializer(data=request.POST)
+        serialize = RegisterSerializer(data=request.data)
         serialize.is_valid(raise_exception=True)
         serialize.save()
         token = Token.objects.create(user=serialize.instance)

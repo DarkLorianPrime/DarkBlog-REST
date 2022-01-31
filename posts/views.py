@@ -46,7 +46,7 @@ class Posts(ModelViewSet):
         user = request.user_data
         if not is_admin(user):
             self.is_author(user)
-        post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
+        post_data = add_to_dict(request.data.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
         if post_data.get('is_published'):
             post_data['created_at'] = datetime.now()
         instance = self.get_object()
@@ -59,7 +59,7 @@ class Posts(ModelViewSet):
         user = request.user_data
         if not is_admin(user):
             self.is_author(user)
-        post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
+        post_data = add_to_dict(request.data.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
         if post_data.get('is_published'):
             post_data['created_at'] = datetime.now()
         serialize = self.get_serializer(data=post_data)
@@ -110,7 +110,7 @@ class CommentsViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         user = request.user_data
-        post_data = add_to_dict(request.POST.dict(), author=user.id, post=self.kwargs['post_id'])
+        post_data = add_to_dict(request.data.dict(), author=user.id, post=self.kwargs['post_id'])
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         serialize.save()

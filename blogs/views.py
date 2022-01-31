@@ -17,7 +17,7 @@ class BlogViewSet(ModelViewSet):
         return paginate(self)
 
     def create(self, request, *args, **kwargs):
-        post_data = request.POST.dict()
+        post_data = request.data.dict()
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         self.perform_create(serialize)
