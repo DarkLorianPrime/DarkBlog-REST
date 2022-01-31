@@ -21,7 +21,7 @@ class BlogViewSet(ModelViewSet):
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         self.perform_create(serialize)
-        return Response({'response': serialize.instance.title})
+        return Response({'response': serialize.instance.title}, status=201)
 
     def update(self, request, *args, **kwargs):
         if not request.data:

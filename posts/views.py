@@ -53,7 +53,7 @@ class Posts(ModelViewSet):
         serialize = self.get_serializer(instance, data=post_data)
         serialize.is_valid(raise_exception=True)
         self.perform_update(serialize)
-        return Response({'response': serialize.instance.title})
+        return Response({'response': serialize.instance.title}, status=201)
 
     def create(self, request, *args, **kwargs):
         user = request.user_data
@@ -65,7 +65,7 @@ class Posts(ModelViewSet):
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         self.perform_create(serialize)
-        return Response({'response': serialize.instance.title})
+        return Response({'response': serialize.instance.title}, status=201)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -114,7 +114,7 @@ class CommentsViewSet(ModelViewSet):
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         serialize.save()
-        return Response({'response': 'ok'})
+        return Response({'response': 'ok'}, status=201)
 
     def like(self, request, *args, **kwargs):
         instance = self.get_object()
