@@ -14,23 +14,27 @@ class BlogSerializer(ModelSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
+        extra_kwargs = {'owner': {"required": False}}
 
     def create(self, validated_data):
-        if Blog.objects.filter(owner__id=validated_data.get('owner').id, title=validated_data.get('title')).exists():
+        owner = self.context['request'].user_data
+        if Blog.objects.filter(owner__id=owner.id, title=validated_data.get('title')).exists():
             raise ValidationError({'error': 'this blog already exists'})
-        instance = Blog.objects.create(**validated_data)
-        return instance
+        validated_data.update({"owner": owner})
+        return Blog.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        if validated_data.get('authors') is not None and validated_data.get('method') == 'add_authors':
-            [instance.authors.add(author) for author in validated_data.get('authors') if author != instance.owner]
-        if validated_data.get('authors') is not None and validated_data.get('method') == 'remove_authors':
-            [instance.authors.remove(author) for author in validated_data.get('authors')]
-        if validated_data.get('method') == 'common':
-            title = validated_data.get('title')
-            if Blog.objects.filter(owner__id=validated_data.get('owner').id, title=title).exists():
-                raise ValidationError({'error': 'this blog already exists'})
-            new_dict = delete_extra(need_types=['title', 'description'], update_dict=validated_data)
-            new_dict['updated_at'] = datetime.now()
-            Blog.objects.filter(id=instance.id).update(**new_dict)
+        methods = {'add_authors': instance.authors.add, 'remove_authors': instance.authors.remove, 'common': self.common_update}
+        authors = validated_data.get('authors')
+        method = validated_data.get('method')
+        methods[method](*authors)
         return instance
+
+    def common_update(self, *args):
+        owner = self.context['request'].user_data
+        title = self.validated_data.get('title')
+        if Blog.objects.filter(owner__id=owner.id, title=title).exists():
+            raise ValidationError({'error': 'this blog already exists'})
+        new_dict = delete_extra(need_types=['title', 'description'], update_dict=self.validated_data)
+        new_dict['updated_at'] = datetime.now()
+        Blog.objects.filter(id=self.instance.id).update(**new_dict)

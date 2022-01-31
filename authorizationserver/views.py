@@ -1,4 +1,3 @@
-from django.db.models import Q
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -12,7 +11,7 @@ from utils.Extra import get_user
 class PermissionAuth(ViewSet):
     def is_auth(self, request, *args, **kwargs):
         # авторизован ли пользователь? - готово
-        user = get_user(self.headers)
+        user = request.user_data
         if user is None:
             return Response({'auth': False})
         user = user.values('username', 'first_name', 'last_name', 'email', 'id', 'avatar')
@@ -34,7 +33,7 @@ class Auth(ViewSet):
         data = request.POST
         serialize = LoginSerializer(data=data)
         serialize.is_valid(raise_exception=True)
-        user = User.objects.filter(Q(username=data.get('username')))
+        user = User.objects.filter(username=data.get('username'))
         if not user.exists():
             raise ValidationError({'error': 'This login is not found.'})
         if not user.first().check_password(data.get('password')):

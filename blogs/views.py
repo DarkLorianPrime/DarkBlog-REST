@@ -18,9 +18,7 @@ class BlogViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         post_data = request.POST.dict()
-        user = get_user(self.request.headers)
-        post_data['owner'] = user.id
-        serialize = self.serializer_class(data=post_data)
+        serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)
         self.perform_create(serialize)
         return Response({'response': serialize.instance.title})
@@ -30,10 +28,9 @@ class BlogViewSet(ModelViewSet):
             return Response({'error': 'No arguments found'})
         instance = self.get_object()
         post_data = request.data.dict()
-        user = get_user(self.request.headers)
+        user = request.user_data
         if not is_admin(user):
             is_owner(user, instance)
-        post_data['owner'] = user.id
         if post_data.get('authors') is not None:
             post_data['authors'] = post_data['authors'].split(', ')
         serialize = self.get_serializer(instance, data=post_data)
