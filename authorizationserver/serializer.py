@@ -6,6 +6,12 @@ from rest_framework.serializers import ModelSerializer, Serializer
 from authorizationserver.models import User, Roles
 
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'id', 'avatar']
+
+
 class LoginSerializer(Serializer):
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=255)

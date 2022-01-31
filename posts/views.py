@@ -9,13 +9,13 @@ from rest_framework.viewsets import ModelViewSet, ViewSet
 from blogs.models import Blog
 from posts.models import Post, Comment
 from posts.serializer import PostSerializer, CommentSerializer
-from utils.Extra import get_user, paginate, is_admin
+from utils.Extra import paginate, is_admin
 from utils.extra_editor import add_to_dict
 
 
 class MainPage(ViewSet):
     def list(self, request, *args, **kwargs):
-        queryset = Post.objects.filter(is_published=True, created_at__isnull=False).order_by("created_at")[0:5].values()
+        queryset = Post.objects.filter(is_published=True, created_at__isnull=False).order_by("-created_at")[0:5].values()
         return Response({'response': queryset})
 
 
@@ -25,7 +25,7 @@ class Posts(ModelViewSet):
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
-        user = get_user(self.request.headers)
+        user = self.request.user_data
         post = Post.objects.filter(blog__id=self.kwargs['blog_id']).order_by('created_at')
         if not is_admin(user):
             if not Blog.objects.filter(id=self.kwargs['blog_id']).filter(Q(owner=user.id) | Q(authors__in=[user.id])):
@@ -37,13 +37,13 @@ class Posts(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers)
+        user = request.user_data
         instance.views.add(user)
         serializer = self.get_serializer(instance)
         return Response({'response': serializer.data})
 
     def update(self, request, *args, **kwargs):
-        user = get_user(self.request.headers)
+        user = request.user_data
         if not is_admin(user):
             self.is_author(user)
         post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
@@ -56,7 +56,7 @@ class Posts(ModelViewSet):
         return Response({'response': serialize.instance.title})
 
     def create(self, request, *args, **kwargs):
-        user = get_user(self.request.headers)
+        user = request.user_data
         if not is_admin(user):
             self.is_author(user)
         post_data = add_to_dict(request.POST.dict(), author=user.id, blog=self.kwargs['blog_id'], created_at=None)
@@ -69,7 +69,7 @@ class Posts(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers).id
+        user = request.user_data.id
         if not is_admin(user):
             self.is_author(user)
         Comment.objects.filter(post__id=instance.id).delete()
@@ -78,7 +78,7 @@ class Posts(ModelViewSet):
 
     def like(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers)
+        user = request.user_data
         if instance.likes.filter(id=user.id).exists():
             instance.likes.remove(user)
             return Response({'response': 'ok'})
@@ -92,7 +92,7 @@ class Posts(ModelViewSet):
         return True
 
     def havepermission(self, request, blog_id):
-        user = get_user(self.request.headers)
+        user = request.user_data
         blog = Blog.objects.filter(id=blog_id).filter(Q(owner=user.id) | Q(authors__in=[user.id]))
         return Response({'response': blog.exists()})
 
@@ -109,7 +109,7 @@ class CommentsViewSet(ModelViewSet):
         return paginate(self)
 
     def create(self, request, *args, **kwargs):
-        user = get_user(self.request.headers)
+        user = request.user_data
         post_data = add_to_dict(request.POST.dict(), author=user.id, post=self.kwargs['post_id'])
         serialize = self.get_serializer(data=post_data)
         serialize.is_valid(raise_exception=True)

@@ -4,22 +4,20 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from authorizationserver.models import User
-from authorizationserver.serializer import LoginSerializer, RegisterSerializer
-from utils.Extra import get_user
+from authorizationserver.serializer import LoginSerializer, RegisterSerializer, UserSerializer
 
 
 class PermissionAuth(ViewSet):
     def is_auth(self, request, *args, **kwargs):
-        # авторизован ли пользователь? - готово
         user = request.user_data
         if user is None:
             return Response({'auth': False})
-        user = user.values('username', 'first_name', 'last_name', 'email', 'id', 'avatar')
-        return Response({'response': user, 'auth': True})
+        user = UserSerializer(user)
+        return Response({'response': user.data, 'auth': True})
 
     def get_roles(self, request, *args, **kwargs):
         # Получает список ролей пользователя - готово
-        user = get_user(self.headers)
+        user = request.user_data
         if user is None:
             return Response({'error': 'Not authentication'})
         roles = user.role.all()

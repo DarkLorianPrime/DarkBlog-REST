@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from blogs.models import Blog
 from blogs.serializer import BlogSerializer
-from utils.Extra import get_user, paginate, is_admin, is_owner
+from utils.Extra import paginate, is_admin, is_owner
 
 
 class BlogViewSet(ModelViewSet):
@@ -40,7 +40,7 @@ class BlogViewSet(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        user = get_user(self.request.headers)
+        user = request.user_data
         if not is_admin(user):
             is_owner(user, instance)
         self.perform_destroy(instance)
