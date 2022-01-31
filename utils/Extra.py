@@ -1,18 +1,9 @@
 from functools import reduce
 
-from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 
 from authorizationserver.models import Roles
 from blogs.models import Blog
-
-
-def get_user(headers, return_user=True):
-    token = headers.get('authorization')
-    user = Token.objects.filter(key=token.split(' ')[1])
-    if return_user:
-        return user.first().user
-    return user
 
 
 def paginate(self, queryset=None):
