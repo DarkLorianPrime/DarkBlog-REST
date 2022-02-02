@@ -20,12 +20,12 @@ class LoginSerializer(Serializer):
 class RegisterSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password', 'email')
+        fields = ('username', 'password')
 
     def create(self, validated_data):
-        user = User.objects.filter(Q(username=validated_data.get('username')) | Q(email=validated_data.get('email')))
+        user = User.objects.filter(username=validated_data.get('username'))
         if user.exists():
-            raise ValidationError({'error': 'This email or login already exists'})
+            raise ValidationError({'error': 'This login already exists'})
         new_user = User.objects.create_user(**validated_data)
-        new_user.role.add(Roles.objects.filter(role='User'))
+        new_user.role.add(Roles.objects.filter(role='User').first())
         return new_user

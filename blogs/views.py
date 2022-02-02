@@ -16,13 +16,6 @@ class BlogViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         return paginate(self)
 
-    def create(self, request, *args, **kwargs):
-        post_data = request.data.dict()
-        serialize = self.get_serializer(data=post_data)
-        serialize.is_valid(raise_exception=True)
-        self.perform_create(serialize)
-        return Response({'response': serialize.instance.title}, status=201)
-
     def update(self, request, *args, **kwargs):
         if not request.data:
             return Response({'error': 'No arguments found'})

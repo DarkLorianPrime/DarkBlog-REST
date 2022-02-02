@@ -18,4 +18,6 @@ class BlogSerializer(ModelSerializer):
         if Blog.objects.filter(owner__id=owner.id, title=validated_data.get('title')).exists():
             raise ValidationError({'error': 'this blog already exists'})
         validated_data.update({"owner": owner})
-        return Blog.objects.create(**validated_data)
+        validated_data.pop('authors')
+        instance = Blog.objects.create(**validated_data)
+        return instance
