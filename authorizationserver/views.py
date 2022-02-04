@@ -16,8 +16,6 @@ class PermissionAuth(ViewSet):
     def get_roles(self, request, *args, **kwargs):
         # Получает список ролей пользователя - готово
         user = request.user_data
-        if user is None:
-            return Response({'error': 'Not authentication'})
         roles = user.role.all()
         return Response({'response': roles.values()})
 
