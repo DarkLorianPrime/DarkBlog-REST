@@ -10,8 +10,6 @@ from authorizationserver.serializers import LoginSerializer, RegisterSerializer,
 class PermissionAuth(ViewSet):
     def is_auth(self, request, *args, **kwargs):
         user = request.user_data
-        if user is None:
-            return Response({'auth': False})
         user = UserSerializer(user)
         return Response({'response': user.data, 'auth': True})
 
@@ -43,5 +41,5 @@ class Auth(ViewSet):
         serialize = RegisterSerializer(data=request.data)
         serialize.is_valid(raise_exception=True)
         serialize.save()
-        token = Token.objects.create(user=serialize.instance)
-        return Response({'reponse': token.key})
+        token = Token.objects.create(user=serialize.instance).key
+        return Response({'response': token})
